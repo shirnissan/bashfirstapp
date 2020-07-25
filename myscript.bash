@@ -7,7 +7,7 @@ else
 	file="$(curl -s $file)"
 	count="$(echo ${#file})"
 fi
-
+c
 count="$(($count-1))"
 
 if [ $count -gt 0 ]; then
