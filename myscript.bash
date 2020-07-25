@@ -1,12 +1,24 @@
 action=$1
 file=$2
-count="$(wc -m < $file)"
-count="$((count-1))"
+
+if [ -f "$file" ]; then
+	count="$(wc -m < $file)"
+else
+	file="$(curl -s $file)"
+	count="$(echo ${#file})"
+fi
+
+count="$(($count-1))"
+
 if [ $count -gt 0 ]; then
 	if [ $action = "count" ]; then
 		echo $count
 	elif [ $action = "invert" ]; then
-		rev $file
+		if [ -f "$file" ]; then
+			rev "$file"
+		else
+			echo "$file" | rev 
+		fi
 	else 
 		echo 'Please add the right parameters'
 	fi
